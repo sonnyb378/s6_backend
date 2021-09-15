@@ -32,16 +32,23 @@ class VendorController extends Controller
                     "orders" => $orders,
                 ];
                 
-                switch ($vendor->response[0]->name) {
-                    case 'json':
-                        return response()->json([
-                            "data" => $data
-                        ]);
-                        break;
-                    case 'xml':
-                        return response()->view('xml', ['data' => $data])->header("Content-Type", 'xml');
-                        break;
+                if (count($vendor->response) > 0) {
+                    switch ($vendor->response[0]->name) {
+                        case 'xml':
+                            return response()->view('xml', ['data' => $data])->header("Content-Type", 'xml');
+                            break;
+                        default:
+                            return response()->json([
+                                "data" => $data
+                            ]);
+                            break;
+                    }
+                } else {
+                    return response()->json([
+                        "data" => $data
+                    ]);
                 }
+                
             }
 
             
