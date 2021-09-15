@@ -11,6 +11,7 @@ class Helper {
           $orders = [];
           $print_line_items = [];
           $temp = [];
+          
           foreach($vendor->orders as $order) {
               $line_items = [];
               $imagepath = Product::find($order->pivot->product_id)->creative->image_url;
